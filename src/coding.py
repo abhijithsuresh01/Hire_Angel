@@ -26,9 +26,9 @@ def register_code():
     resume = request.files['file']
 
     resume_name  = secure_filename(resume.filename)
-    resume.save("static/uploads", resume_name)
+    resume.save(os.path.join("static/uploads", resume_name))
 
-    qry="INSERT INTO `login` VALUES (NULL, %s, %s,`nurse`)"
+    qry="INSERT INTO `login` VALUES (NULL, %s, %s,'pending')"
     val=(username,password)
     id=iud(qry, val)
 
@@ -41,9 +41,28 @@ def register_code():
 
 @app.route("/hospital_registration")
 def hospital_reg() :
-    return render_template("hospitalreg.html")
+    return render_template("Hospital/hospitalreg.html")
 
+@app.route("/register_code_hsptl", methods=['post'])
+def register_code_hsptl():
+    fname=request.form["textfield"]
 
+    location= request.form["textfield2"]
+    contactno= request.form["textfield3"]
+    website = request.form["textfield4"]
+    username= request.form["textfield5"]
+    password = request.form["textfield6"]
+
+    qry="INSERT INTO `login` VALUES (NULL, %s, %s,'pending')"
+    val=(username,password)
+    id=iud(qry, val)
+
+    qry = "INSERT INTO `hospitals` VALUES (NULL,%s,%s,%s,%s,%s)"
+    val=(id,fname,location,contactno,website)
+
+    iud(qry,val)
+
+    return '''<script>alert("successfully registered");window.location="/"</script>'''
 
 
 @app.route("/login_code", methods=['post'])
@@ -69,10 +88,103 @@ def login_code():
 @app.route("/adminHome")
 def admin_home():
     return render_template("Admin/adminhome.html")
+@app.route("/Verify_nurses")
+def Verify_nurses():
 
-@app.route("/viewComplaint")
-def view_complaint():
-    return render_template("Admin/complaint.html")
+    qry = 'SELECT nurses.* FROM nurses JOIN login ON nurses.lid = login.id WHERE TYPE="pending"'
+    res = selectall(qry)
+
+    return render_template("Admin/nurse_view.html", val = res)
+
+
+@app.route("/accept_nurse")
+def accept_nurse():
+    id = request.args.get('id')
+    qry = 'UPDATE login SET type="nurse" WHERE id=%s'
+    iud(qry, id)
+    return '''<script>alert("Successfully Accepted");window.location="/Verify_nurses"</script>'''
+
+
+@app.route("/reject_nurse")
+def reject_nurse():
+    id = request.args.get('id')
+    qry = 'UPDATE login SET type="rejected" WHERE id=%s'
+    iud(qry, id)
+    return '''<script>alert("Rejected");window.location="/Verify_nurses"</script>'''
+
+
+@app.route("/Verify_hospital")
+def Verify_hospital():
+
+    qry = 'SELECT hospitals.* FROM hospitals JOIN login ON hospitals.lid = login.id WHERE TYPE="pending"'
+    res = selectall(qry)
+
+    return render_template("Admin/hospital_view.html", val = res)
+
+
+@app.route("/accept_hospital")
+def accept_hospital():
+    id = request.args.get('id')
+    qry = 'UPDATE login SET type="hospital" WHERE id=%s'
+    iud(qry, id)
+    return '''<script>alert("Successfully Accepted");window.location="/Verify_hospital"</script>'''
+
+
+@app.route("/reject_hospital")
+def reject_hospital():
+    id = request.args.get('id')
+    qry = 'UPDATE login SET type="rejected" WHERE id=%s'
+    iud(qry, id)
+    return '''<script>alert("Rejected");window.location="/Verify_hospital"</script>'''
+
+
+@app.route("/blockUnblockNurse")
+def blockUnblockNurse():
+    qry = 'SELECT * FROM nurses JOIN login ON nurses.lid = login.id WHERE type="nurse" or type="blocked"'
+    res = selectall(qry)
+    return render_template("Admin/blocknurse.html", val=res)
+
+
+@app.route("/block_nurse")
+def block_nurse():
+    id = request.args.get('id')
+    qry = 'UPDATE login SET type= "blocked" WHERE id=%s'
+    iud(qry, id)
+    return '''<script>alert("Blocked");window.location="/blockUnblockNurse"</script>'''
+
+@app.route("/unblock_nurse")
+def unblock_nurse():
+    id = request.args.get('id')
+    qry = 'UPDATE login SET type= "nurse" WHERE id=%s'
+    iud(qry, id)
+    return '''<script>alert("Unblocked");window.location="/blockUnblockNurse"</script>'''
+
+
+@app.route("/blockUnblockHospital")
+def blockUnblockHospital():
+    qry = 'SELECT * FROM hospitals JOIN login ON hospitals.lid = login.id WHERE type="hospital" or type="blocked"'
+    res = selectall(qry)
+    return render_template("Admin/blockhospital.html", val=res)
+
+
+@app.route("/block_hospital")
+def block_hospital():
+    id = request.args.get('id')
+    qry = 'UPDATE login SET type= "blocked" WHERE id=%s'
+    iud(qry, id)
+    return '''<script>alert("Blocked");window.location="/blockUnblockHospital"</script>'''
+
+@app.route("/unblock_hospital")
+def unblock_hospital():
+    id = request.args.get('id')
+    qry = 'UPDATE login SET type= "hospital" WHERE id=%s'
+    iud(qry, id)
+    return '''<script>alert("Unblocked");window.location="/blockUnblockHospital"</script>'''
+
+
+
+
+
 
 @app.route("/viewHospital")
 def view_hospital():

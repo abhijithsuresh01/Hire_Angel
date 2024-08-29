@@ -10,20 +10,26 @@
   <table width="200" border="1">
     <tr>
       <td>Name</td>
-      <td>Nurse ID </td>
+      <td>Nurse ID</td>
       <td>Speciality</td>
       <td>Experience</td>
       <td>&nbsp;</td>
+
     </tr>
 
     {% for i in val %}
     <tr>
-      <td>{{i['fname']}}{{i['lname']}}</td>
-      <td>&nbsp;{{i['nurseid']}}</td>
-      <td>&nbsp;{{i['speciality']}}</td>
-      <td>{{i['experience']}}&nbsp;</td>
-      <td><p><a href="accept_nurse?id={{i['lid']}}">accept</a></p>
-      <p><a href="reject_nurse?id={{i['lid']}}">reject</a></p></td>
+      <td>{{i['fname']}} {{i['lname']}}</td>
+      <td>{{i['nurseid']}}</td>
+      <td>{{i['speciality']}}</td>
+      <td>{{i['experience']}}</td>
+      <td>
+        {% if i["type"] == "blocked"%}
+          <a href="unblock_nurse?id={{i['lid']}}">Unblock</a>
+        {% else %}
+          <a href="block_nurse?id={{i['lid']}}">Block</a>
+        {% endif %}
+      </td>
     </tr>
     {% endfor %}
   </table>
