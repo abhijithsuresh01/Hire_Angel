@@ -6,20 +6,20 @@
 </head>
 
 <body>
-<form id="form1" name="form1" method="post" action="viewComplaintsNurse">
+<form id="form1" name="form1" method="post" action="add_review">
   <table width="200" border="1">
     <tr>
-      <td>Complaints</td>
+      <td>Hospital</td>
+      <td>Review</td>
       <td>Date</td>
-      <td>Reply</td>
     </tr>
 
     {% for i in val %}
 
     <tr>
-      <td>{{i['complaint']}}</td>
+      <td>{{i['name']}}</td>
+      <td>{{i['review']}}</td>
       <td>{{i['date']}}</td>
-      <td>{{i['reply']}}</td>
     </tr>
 
     {% endfor %}

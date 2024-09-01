@@ -5,6 +5,8 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
+app.secret_key = "8978789494"
+
 @app.route("/")
 def login():
     return render_template("login.html")
@@ -77,10 +79,13 @@ def login_code():
     if res is None:
         return '''<script>alert("Invalid username or password");window.location="/"</script>'''
     elif res['type'] == "admin":
+        session['lid'] = res['id']
         return '''<script>alert("Welcome Admin");window.location="/adminHome"</script>'''
     elif res['type'] == "nurse":
+        session['lid'] = res['id']
         return '''<script>alert("Welcome Nurse");window.location="/nurseHome"</script>'''
     elif res['type'] == "hospital":
+        session['lid'] = res['id']
         return '''<script>alert("Welcome Hospital");window.location="/hospitalHome"</script>'''
     else:
         return '''<script>alert("Invalid username or password");window.location="/"</script>'''
@@ -188,6 +193,31 @@ def viewcomplaints():
     return render_template("Admin/complaint.html")
 
 
+@app.route("/display_complaints", methods=['post'])
+def display_complaints():
+    c_type = request.form['select']
+    u_type = request.form['select2']
+    if c_type == "Pending":
+        if u_type == "Nurse":
+            qry = "SELECT `nurses`.`fname`,`lname`,`complaints`.* FROM `complaints` JOIN `nurses` ON `complaints`.`lid` = `nurses`.`lid` WHERE `complaints`.`reply`='pending'"
+            res = selectall(qry)
+            return render_template("Admin/complaint.html", val = res, ctype=c_type, utype = u_type)
+        else:
+            qry = "SELECT `hospitals`.`name`, `complaints`.* FROM `complaints` JOIN `hospitals` ON `complaints`.`lid`=`hospitals`.`lid` WHERE `complaints`.`reply`='pending'"
+            res = selectall(qry)
+            return render_template("Admin/complaint.html", val=res, ctype=c_type, utype=u_type)
+    else:
+        if u_type == "Nurse":
+            qry = "SELECT `nurses`.`fname`,`lname`,`complaints`.* FROM `complaints` JOIN `nurses` ON `complaints`.`lid` = `nurses`.`lid` WHERE `complaints`.`reply`!='pending'"
+            res = selectall(qry)
+            return render_template("Admin/complaint.html", val = res, ctype=c_type, utype = u_type)
+        else:
+            qry = "SELECT `hospitals`.`name`, `complaints`.* FROM `complaints` JOIN `hospitals` ON `complaints`.`lid`=`hospitals`.`lid` WHERE `complaints`.`reply`!='pending'"
+            res = selectall(qry)
+            return render_template("Admin/complaint.html", val=res, ctype=c_type, utype=u_type)
+
+
+
 @app.route("/complaintreply")
 def complaintreply():
 
@@ -246,20 +276,74 @@ def reg_nurse():
 
 @app.route("/jobApply")
 def job_apply():
-    return render_template("Nurse/apply_job.html")
+    qry = "SELECT `hospitals`.`name` AS hname, `job details`.* FROM `job details` JOIN `hospitals` ON `job details`.`hospital_id`=`hospitals`.`lid`"
+    res = selectall(qry)
+    return render_template("Nurse/apply_job.html", val=res)
 
 @app.route("/jobStatus")
 def job_status():
-    return render_template("Nurse/job_status.html")
+    qry = "SELECT `job details`.name, `job application`.* FROM `job application` JOIN `job details` ON `job application`.`job_id`=`job details`.`id` WHERE `job application`.`nurse_id`=%s"
+    res = selectall2(qry, session['lid'])
+    return render_template("Nurse/job_status.html", val = res)
 
 @app.route("/addComplaintsNurse")
 def add_complaints_nurse():
-    return render_template("Nurse/complaints.html")
+    qry = "SELECT * FROM `complaints` WHERE `lid`=%s"
+    res = selectall2(qry, session['lid'])
+    return render_template("Nurse/complaints.html", val=res)
 
-@app.route("/viewComplaintsNurse")
+@app.route("/viewComplaintsNurse", methods=['post'])
 def view_complaints_nurse():
     return render_template("Nurse/view_complaints.html")
 
+
+@app.route("/insert_complaint", methods=['post'])
+def insert_complaint():
+    complaint = request.form['textfield']
+    qry = "INSERT INTO `complaints` VALUES(NULL,%s,%s,'pending',CURDATE())"
+    iud(qry, (session['lid'], complaint))
+
+    return '''<script>alert("Success");window.location="addComplaintsNurse"</script>'''
+
+
+@app.route("/apply_job")
+def apply_job():
+    id = request.args.get('id')
+
+    qry = "SELECT * FROM `job application` WHERE `job_id`=%s and nurse_id=%s"
+    res = selectone(qry, (id, session['lid']))
+
+    if res is None:
+
+        qry = "INSERT INTO `job application` VALUES(NULL,%s,%s,'pending',CURDATE())"
+        iud(qry, (session['lid'],id))
+
+        return '''<script>alert("Success");window.location="jobApply"</script>'''
+    else:
+        return '''<script>alert("Already applied");window.location="jobApply"</script>'''
+
+
+@app.route("/manage_review")
+def manage_review():
+    qry = "SELECT `hospitals`.name,`reviews`.* FROM `reviews` JOIN `hospitals` ON `reviews`.`hospital_id`=`hospitals`.lid WHERE `reviews`.`nurse_id`=%s"
+    res = selectall2(qry, session['lid'])
+    return render_template("Nurse/manage_review.html", val = res)
+
+
+@app.route("/add_review", methods=['post'])
+def add_review():
+    qry = "SELECT * FROM `hospitals` JOIN `login` ON `hospitals`.lid=`login`.id WHERE `login`.type='hospital'"
+    res = selectall(qry)
+    return render_template("Nurse/add_review.html", val = res)
+
+
+@app.route("/insert_review", methods=['post'])
+def insert_review():
+    hid = request.form['select']
+    review = request.form['textfield']
+    qry = "INSERT INTO `reviews` VALUES(NULL, %s, %s, %s, CURDATE())"
+    iud(qry,(session['lid'], hid, review))
+    return '''<script>alert("Success");window.location="manage_review"</script>'''
 
 
 @app.route("/hospitalHome")

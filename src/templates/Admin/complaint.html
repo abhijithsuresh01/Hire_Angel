@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<form id="form1" name="form1" method="post" action="display_complaint">
+<form id="form1" name="form1" method="post" action="display_complaints">
   <table border="1">
     <tr>
       <td colspan="4"><label>
@@ -17,8 +17,8 @@
 
         </select>
         <select name="select2">
-          <option {% if utype =="nurse"%} selected {% endif %}>Nurse</option>
-          <option  {% if utype =="hospital"%} selected {% endif %}>Hospital</option>
+          <option {% if utype =="Nurse"%} selected {% endif %}>Nurse</option>
+          <option  {% if utype =="Hospital"%} selected {% endif %}>Hospital</option>
         </select>
         <input name="View" type="submit" id="View" value="view" />
       </label></td>

@@ -6,20 +6,32 @@
 </head>
 
 <body>
-<form id="form1" name="form1" method="post" action="insert_complaint">
+<form id="form1" name="form1" method="post" action="insert_review">
   <table width="200" border="1">
-    
     <tr>
-      <td>Complaint</td>
+	<th>Hospital Name</th>
+      <td><label>
+        <select name="select">
+
+          {% for i in val %}
+          <option value="{{i['lid']}}">{{i['name']}}</option>
+          {% endfor %}
+
+        </select>
+      </label></td>
+    </tr>
+
+    <tr>
+	<th>Review</th>
       <td><label>
         <input type="text" name="textfield" />
       </label></td>
     </tr>
-    <tr>
-      <td colspan="2"><label>
-        <input type="submit" name="Submit" value="Submit" />
-      </label></td>
+
+	 <tr>
+      <th colspan="2"><input type="submit" value="Submit" /></th>
     </tr>
+
   </table>
 </form>
 </body>

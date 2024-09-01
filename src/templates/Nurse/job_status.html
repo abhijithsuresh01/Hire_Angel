@@ -9,20 +9,21 @@
 <form id="form1" name="form1" method="post" action="">
   <table width="200" border="1">
     <tr>
-      <td>Complaints</td>
+      <td>Job</td>
       <td>Date</td>
-      <td>Reply</td>
+      <td>Status</td>
     </tr>
+
+    {% for i in val %}
+
     <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
+      <td>{{i['name']}}</td>
+      <td>{{i['date']}}</td>
+      <td>{{i['status']}}</td>
     </tr>
-    <tr>
-      <td colspan="3"><label>
-        <input name="add new" type="submit" id="add new" value="add new" />
-      </label></td>
-    </tr>
+
+    {% endfor %}
+
   </table>
 </form>
 </body>
