@@ -183,6 +183,48 @@ def unblock_hospital():
 
 
 
+@app.route("/viewcomplaints")
+def viewcomplaints():
+    return render_template("Admin/complaint.html")
+
+
+@app.route("/complaintreply")
+def complaintreply():
+
+    return render_template("Admin/complaintreply.html")
+
+
+@app.route("/insert_reply", methods=['post'])
+def insert_reply():
+    reply = request.form['textfield']
+    qry = "UPDATE complaint SET reply = %s WHERE id = %s"
+    iud(qry,(reply, session['cid']))
+    return render_template("Admin/complaintreply.html")
+
+
+@app.route("/display_complaint", methods=['post'])
+def display_complaint():
+    complaint_type = request.form['select']
+    user_type = request.form['select2']
+
+    if complaint_type == "Pending":
+        if user_type == "nurse":
+            qry = 'SELECT * FROM complaints JOIN nurses ON complaints.lid=nurses.lid WHERE complaints.reply="pending"'
+            res = selectall(qry)
+            return render_template("Admin/complaintreply.html", val=res, utype = user_type, ctype = complaint_type)
+        else:
+            qry = 'SELECT * FROM complaints JOIN hospitals ON complaints.lid=hospitals.lid WHERE complaints.reply="pending"'
+            res = selectall(qry)
+            return render_template("Admin/complaintreply.html", val=res, utype = user_type, ctype = complaint_type)
+    else:
+        if user_type == "nurses":
+            qry = 'SELECT * FROM complaints JOIN nurses ON complaints.lid=nurses.lid WHERE complaints.reply!="pending"'
+            res = selectall(qry)
+            return render_template("Admin/complaintreply.html", val=res, utype = user_type, ctype = complaint_type)
+        else:
+            qry = 'SELECT * FROM complaints JOIN hospitals ON complaints.lid=hospitals.lid WHERE complaints.reply!="pending"'
+            res = selectall(qry)
+            return render_template("Admin/complaintreply.html", val=res, utype = user_type, ctype = complaint_type)
 
 
 
@@ -217,6 +259,8 @@ def add_complaints_nurse():
 @app.route("/viewComplaintsNurse")
 def view_complaints_nurse():
     return render_template("Nurse/view_complaints.html")
+
+
 
 @app.route("/hospitalHome")
 def hospital_home():

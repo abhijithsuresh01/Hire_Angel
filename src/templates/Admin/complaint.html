@@ -6,20 +6,41 @@
 </head>
 
 <body>
-<form id="form1" name="form1" method="post" action="">
-  <table width="200" border="1">
+<form id="form1" name="form1" method="post" action="display_complaint">
+  <table border="1">
     <tr>
-      <td>Name</td>
-      <td>Complaint</td>
+      <td colspan="4"><label>
+        <select name="select">
+
+          <option {% if ctype =="Pending"%} selected {% endif %}>Pending</option>
+          <option {% if ctype =="Solved"%} selected {% endif %}>Solved</option>
+
+        </select>
+        <select name="select2">
+          <option {% if utype =="nurse"%} selected {% endif %}>Nurse</option>
+          <option  {% if utype =="hospital"%} selected {% endif %}>Hospital</option>
+        </select>
+        <input name="View" type="submit" id="View" value="view" />
+      </label></td>
+    </tr>
+    <tr>
+      <td>Name </td>
+      <td>complaint</td>
       <td>Date</td>
       <td>&nbsp;</td>
     </tr>
+
+    {% for i in val %}
+
     <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td><a href="#">reply</a></td>
+      <td>{{i['fname']}} {{i['lname']}}</td>
+      <td>{{i['complaint']}}</td>
+      <td>{{i['date']}}</td>
+      <td><a href="Reply?id={{i['id']}}">Send Reply</a></td>
     </tr>
+
+    {% endfor %}
+
   </table>
 </form>
 </body>
