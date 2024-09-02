@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+{% extends "Admin/admin_index.html" %}
+{% block body %}
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Untitled Document</title>
@@ -7,7 +7,7 @@
 
 <body>
 <form id="form1" name="form1" method="post" action="">
-  <table width="200" border="1">
+  <table width="200" border="1" class ="table table-hover table-striped">
     <tr>
       <td>Name</td>
       <td>Nurse ID </td>
@@ -22,11 +22,12 @@
       <td>&nbsp;{{i['nurseid']}}</td>
       <td>&nbsp;{{i['speciality']}}</td>
       <td>{{i['experience']}}&nbsp;</td>
-      <td><p><a href="accept_nurse?id={{i['lid']}}">accept</a></p>
-      <p><a href="reject_nurse?id={{i['lid']}}">reject</a></p></td>
+      <td><p><a href="accept_nurse?id={{i['lid']}}">Accept</a></p>
+      <p><a href="reject_nurse?id={{i['lid']}}">Reject</a></p></td>
     </tr>
     {% endfor %}
   </table>
 </form>
 </body>
 </html>
+{% endblock %}

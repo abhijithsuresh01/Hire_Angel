@@ -9,7 +9,7 @@ app.secret_key = "8978789494"
 
 @app.route("/")
 def login():
-    return render_template("login.html")
+    return render_template("loginindex.html")
 
 @app.route("/nurse_registration")
 def nurse_registration() :
@@ -92,7 +92,7 @@ def login_code():
 
 @app.route("/adminHome")
 def admin_home():
-    return render_template("Admin/adminhome.html")
+    return render_template("Admin/admin_index.html")
 @app.route("/Verify_nurses")
 def Verify_nurses():
 
@@ -221,6 +221,9 @@ def display_complaints():
 @app.route("/complaintreply")
 def complaintreply():
 
+    id = request.args.get('id')
+    session['cid'] = id
+
     return render_template("Admin/complaintreply.html")
 
 
@@ -268,7 +271,7 @@ def view_nurse():
 
 @app.route("/nurseHome")
 def nurse_home():
-    return render_template("Nurse/nursehome.html")
+    return render_template("Nurse/nurse_index.html")
 
 @app.route("/regNurse")
 def reg_nurse():
@@ -348,7 +351,7 @@ def insert_review():
 
 @app.route("/hospitalHome")
 def hospital_home():
-    return render_template("Hospital/hospitalhome.html")
+    return render_template("Hospital/hospital_index.html")
 
 @app.route("/regHospital")
 def reg_hospital():
