@@ -67,6 +67,8 @@ def register_code_hsptl():
     return '''<script>alert("successfully registered");window.location="/"</script>'''
 
 
+
+
 @app.route("/login_code", methods=['post'])
 def login_code():
     username = request.form['textfield']
@@ -98,6 +100,7 @@ def Verify_nurses():
 
     qry = 'SELECT nurses.* FROM nurses JOIN login ON nurses.lid = login.id WHERE TYPE="pending"'
     res = selectall(qry)
+    
 
     return render_template("Admin/nurse_view.html", val = res)
 
@@ -356,14 +359,28 @@ def hospital_home():
 @app.route("/regHospital")
 def reg_hospital():
     return render_template("Hospital/hospitalreg.html")
-
 @app.route("/addJob")
-def add_job():
+def addjob() :
     return render_template("Hospital/add_job.html")
 
+@app.route("/addJobcode", methods=['post'])
+def add_Jobcode():
+    jobname =request.form["textfield"]
+    details =request.form["textfield2"]
+    date =request.form["textfield3"]
+    criteria =request.form["textfield4"]
+
+    qry= "INSERT INTO `job details` VALUES (NULL,%s,%s,%s,%s,%s)"
+    iud(qry, (session['lid'],jobname,details,date,criteria))
+    return '''<script>alert("JOB ADDED SUCCESFULLY");window.location="/addJob"</script>'''
 @app.route("/manageJob")
 def manage_job():
     return render_template("Hospital/manage_job.html")
+@app.route("/jobapplications")
+def job_applications():
+    qry = "SELECT `nurses`.`fname`,`lname`,`experience`,`resume`,`job details`.* FROM `job application` JOIN `job details` ON `job application`.`job_id`=`job details`.id JOIN `nurses` ON `job application`.`nurse_id`=`nurses`.lid WHERE `job details`.`hospital_id`=%s"
+    res = selectall2(qry,session['lid'])
+    return render_template("Hospital/job_applications.html", val=res)
 
 @app.route("/addComplaintsHospital")
 def add_complaints_hospital():

@@ -1,0 +1,35 @@
+{% extends "Hospital/hospital_index.html" %}
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <title>Job Applications</title>
+</head>
+<body>
+<body>
+<form id="form1" name="form1" method="post" action="">
+  <table width="200" border="1" class ="table table-hover table-striped">
+<tr>
+    <td>Applicant Name</td>
+    <td>Applied Post</td>
+    <td>Experience</td>
+    <td>Resume</td>
+     <td>&nbsp;</td>
+</tr>
+      {% for i in val %}
+      <tr>
+      <td>{{i['fname']}} {{i['lname']}}</td>
+      <td>{{i['name']}}</td>
+      <td>{{i['experience']}}</td>
+      <td><a href="../static/uploads/{{i['resume']}}">View</a> </td>
+    <td> <a href="#">accept</a>
+    <a href="#">reject</a>
+
+  </td>
+  </tr>
+
+      {% endfor %}
+
+</body>
+</html>
+
+{% endblock %}
