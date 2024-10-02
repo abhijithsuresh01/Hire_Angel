@@ -375,12 +375,46 @@ def add_Jobcode():
     return '''<script>alert("JOB ADDED SUCCESFULLY");window.location="/addJob"</script>'''
 @app.route("/manageJob")
 def manage_job():
-    return render_template("Hospital/manage_job.html")
+    qry="SELECT * FROM `job details` WHERE hospital_id=%s"
+
+    res=selectall2(qry,session['lid'])
+
+    return render_template("Hospital/manage_job.html",val=res)
+
+
+@app.route("/delete_job")
+def delete_job():
+    id = request.args.get('id')
+    print(id)
+    qry = 'DELETE FROM `job details` WHERE id=%s'
+    iud(qry, id)
+    return '''<script>alert("Successfully Deleted");window.location="/manageJob"</script>'''
+
+
+
 @app.route("/jobapplications")
 def job_applications():
-    qry = "SELECT `nurses`.`fname`,`lname`,`experience`,`resume`,`job details`.* FROM `job application` JOIN `job details` ON `job application`.`job_id`=`job details`.id JOIN `nurses` ON `job application`.`nurse_id`=`nurses`.lid WHERE `job details`.`hospital_id`=%s"
+    qry = "SELECT `nurses`.`fname`,`lname`,`experience`,`resume`,`job details`.* FROM `job application` JOIN `job details` ON `job application`.`job_id`=`job details`.id JOIN `nurses` ON `job application`.`nurse_id`=`nurses`.lid WHERE `job details`.`hospital_id`=%s and `job application`.`status`='pending'"
     res = selectall2(qry,session['lid'])
     return render_template("Hospital/job_applications.html", val=res)
+
+
+@app.route("/accept_job")
+def accept_job():
+    id = request.args.get('id')
+    qry = 'UPDATE `job application` SET status="accepted" WHERE id=%s'
+    iud(qry, id)
+    return '''<script>alert("Successfully Accepted");window.location="/jobapplications"</script>'''
+
+
+
+@app.route("/reject_job")
+def reject_job():
+    id = request.args.get('id')
+    qry = 'UPDATE `job application` SET status="rejected" WHERE id=%s'
+    iud(qry, id)
+    return '''<script>alert("Successfully Rejected");window.location="/jobapplications"</script>'''
+
 
 @app.route("/addComplaintsHospital")
 def add_complaints_hospital():
@@ -389,6 +423,7 @@ def add_complaints_hospital():
 @app.route("/viewComplaintsHospital")
 def view_complaints_hospital():
     return render_template("Hospital/view_complaint.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

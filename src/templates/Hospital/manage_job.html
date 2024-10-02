@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+{% extends "Hospital/hospital_index.html" %}
+{% block body %}
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Untitled Document</title>
@@ -7,7 +7,7 @@
 
 <body>
 <form id="form1" name="form1" method="post" action="">
-  <table width="200" border="1">
+  <table width="200" border="1" class ="table table-hover table-striped">
     <tr>
       <td>Job Name </td>
       <td>Details</td>
@@ -15,20 +15,26 @@
       <td>Criteria</td>
       <td>&nbsp;</td>
     </tr>
+
+    {% for i in val %}
     <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
+      <td>{{i['name']}}&nbsp;</td>
+      <td>{{i['details']}}&nbsp;</td>
+      <td>{{i['date']}}&nbsp;</td>
+      <td>&nbsp;{{i['criteria']}}</td>
       <td>
-      <p><a href="#">delete</a></p></td>
+      <p><a href="delete_job?id={{i['id']}}">delete</a></p></td>
     </tr>
     <tr>
       <td colspan="5"><label>
-        <input name="Add" type="submit" id="Add" value="Add" />
+
+        <!--<input name="Add" type="submit" id="Add" value="Add" />-->
       </label></td>
     </tr>
+
+    {% endfor %}
   </table>
 </form>
 </body>
 </html>
+{% endblock %}

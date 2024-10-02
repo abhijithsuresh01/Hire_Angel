@@ -1,57 +1,102 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Untitled Document</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Hospital Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    table {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-collapse: separate;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    table td {
+      padding: 10px;
+      vertical-align: middle;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin: 4px 0;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+  </style>
 </head>
 
 <body>
-<form id="form1" name="form1" method="post" action="register_code_hsptl">
-  <table width="200" border="1">
-    <tr>
-      <td>Hospital Name </td>
-      <td><label>
-        <input type="text" name="textfield" />
-      </label></td>
-    </tr>
-    <tr>
-      <td>Location </td>
-      <td><label>
-        <input type="text" name="textfield2" />
-      </label></td>
-    </tr>
-    <tr>
-      <td>Phone No </td>
-      <td><label>
-        <input type="text" name="textfield3" />
-      </label></td>
-    </tr>
-    <tr>
-      <td>Website </td>
-      <td><label>
-        <input type="text" name="textfield4" />
-      </label></td>
-    </tr>
-
-
-    <tr>
-      <td>Username</td>
-      <td><label>
-        <input type="text" name="textfield5" />
-      </label></td>
-    </tr>
-    <tr>
-      <td>Password</td>
-      <td><label>
-        <input type="text" name="textfield6" />
-      </label></td>
-    </tr>
-    <tr>
-      <td colspan="2"><label>
-        <input name="Register" type="submit" id="Register" value="Register" />
-      </label></td>
-    </tr>
-  </table>
-</form>
+  <form id="form1" name="form1" method="post" action="register_code_hsptl">
+    <h1>Hospital Registration</h1>
+    <table border="0">
+      <tr>
+        <td><label for="hospitalname">Hospital Name</label></td>
+        <td><input type="text" name="textfield" id="hospitalname" /></td>
+      </tr>
+      <tr>
+        <td><label for="location">Location</label></td>
+        <td><input type="text" name="textfield2" id="location" /></td>
+      </tr>
+      <tr>
+        <td><label for="phone">Phone No</label></td>
+        <td><input type="text" name="textfield3" id="phone" /></td>
+      </tr>
+      <tr>
+        <td><label for="website">Website</label></td>
+        <td><input type="text" name="textfield4" id="website" /></td>
+      </tr>
+      <tr>
+        <td><label for="username">Username</label></td>
+        <td><input type="text" name="textfield5" id="username" /></td>
+      </tr>
+      <tr>
+        <td><label for="password">Password</label></td>
+        <td><input type="text" name="textfield6" id="password" /></td>
+      </tr>
+      <tr>
+        <td colspan="2"><input name="Register" type="submit" id="Register" value="Register" /></td>
+      </tr>
+    </table>
+  </form>
 </body>
 </html>
