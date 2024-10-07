@@ -417,12 +417,25 @@ def reject_job():
 
 
 @app.route("/addComplaintsHospital")
-def add_complaints_hospital():
+def addComplaintsHospital():
+    qry = "SELECT * FROM `complaints` WHERE `lid`=%s"
+    res = selectall2(qry, session['lid'])
+    return render_template("Hospital/complaints.html", val=res)
+
     return render_template("Hospital/complaints.html")
 
-@app.route("/viewComplaintsHospital")
-def view_complaints_hospital():
+@app.route("/viewComplaintsHospital", methods=['post'])
+def viewComplaintsHospital():
     return render_template("Hospital/view_complaint.html")
+
+@app.route("/hospital_insert_complaint", methods=['post'])
+def hospital_insert_complaint():
+    complaint = request.form['textfield']
+    qry = "INSERT INTO `complaints` VALUES(NULL,%s,%s,'pending',CURDATE())"
+    iud(qry, (session['lid'], complaint))
+
+    return '''<script>alert("Success");window.location="addComplaintsHospital"</script>'''
+
 
 
 if __name__ == "__main__":
