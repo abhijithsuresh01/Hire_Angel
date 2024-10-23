@@ -14,6 +14,7 @@
       <td>Details</td>
       <td>Date</td>
       <td>Criteria</td>
+      <td>Equivalency</td>
       <td>&nbsp;</td>
     </tr>
 
@@ -24,7 +25,9 @@
       <td>{{i['name']}}</td>
       <td>{{i['details']}}</td>
       <td>{{i['date']}}</td>
-      <td>{{i['criteria']}}</td>
+      <td>{{i['criteria']}} &nbsp;  </td>
+      <td> <a href="add_equi?id={{i['id']}}">Add equivalency</a></td>
+
       <td><a href="apply_job?id={{i['id']}}">apply</a></td>
     </tr>
 

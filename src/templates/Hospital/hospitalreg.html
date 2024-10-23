@@ -71,27 +71,31 @@
     <table border="0">
       <tr>
         <td><label for="hospitalname">Hospital Name</label></td>
-        <td><input type="text" name="textfield" id="hospitalname" /></td>
+        <td><input type="text" name="textfield" id="hospitalname" required /></td>
       </tr>
       <tr>
         <td><label for="location">Location</label></td>
-        <td><input type="text" name="textfield2" id="location" /></td>
+        <td><input type="text" name="textfield2" id="location" required /></td>
       </tr>
       <tr>
         <td><label for="phone">Phone No</label></td>
-        <td><input type="text" name="textfield3" id="phone" /></td>
+        <td><input type="tel" name="textfield3" id="phone" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required /></td>
+      </tr>
+      <tr>
+        <td><label for="email">Email</label></td>
+        <td><input type="email" name="email" id="email" required /></td>
       </tr>
       <tr>
         <td><label for="website">Website</label></td>
-        <td><input type="text" name="textfield4" id="website" /></td>
+        <td><input type="url" name="textfield4" id="website" placeholder="https://example.com" /></td>
       </tr>
       <tr>
         <td><label for="username">Username</label></td>
-        <td><input type="text" name="textfield5" id="username" /></td>
+        <td><input type="text" name="textfield5" id="username" required /></td>
       </tr>
       <tr>
         <td><label for="password">Password</label></td>
-        <td><input type="text" name="textfield6" id="password" /></td>
+        <td><input type="password" name="textfield6" id="password" minlength="8" required /></td>
       </tr>
       <tr>
         <td colspan="2"><input name="Register" type="submit" id="Register" value="Register" /></td>

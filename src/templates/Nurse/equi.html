@@ -1,0 +1,19 @@
+{% extends "Nurse/nurse_index.html" %}
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="insert_equi" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <th><input type="file" name="equi"></th>
+        </tr>
+        <tr>
+            <th><input type="submit" value="submit"></th>
+        </tr>
+    </table>
+</form>
+</body>
+{% endblock %}

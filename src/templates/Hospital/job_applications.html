@@ -14,6 +14,7 @@
     <td>Applied Post</td>
     <td>Experience</td>
     <td>Resume</td>
+    <td>Equivalency</td>
      <td>&nbsp;</td>
 </tr>
       {% for i in val %}
@@ -21,9 +22,12 @@
       <td>{{i['fname']}} {{i['lname']}}</td>
       <td>{{i['name']}}</td>
       <td>{{i['experience']}}</td>
+
       <td><a href="../static/uploads/{{i['resume']}}">View</a> </td>
-    <td> <a href="accept_job?id={{i['id']}}">accept</a>
-    <a href="reject_job?id={{i['id']}}">reject</a>
+           <td><a href="view_equi?id={{i['jaid']}}">view</a> </td>
+
+    <td> <a href="accept_job?id={{i['jaid']}}">accept</a>
+    <a href="reject_job?id={{i['jaid']}}">reject</a>
 
   </td>
   </tr>

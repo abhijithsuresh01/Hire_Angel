@@ -1,0 +1,25 @@
+{% extends "Hospital/hospital_index.html" %}
+{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1" class="table table-striped table-hover">
+
+    <tr>
+        <th>File</th>
+    </tr>
+{% for i in val %}
+    <tr>
+        <th>
+            <a href="../static/uploads/{{i['file']}}">View</a>
+        </th>
+    </tr>
+
+    {% endfor %}
+
+</table>
+</table>
+</body>
+{% endblock %}

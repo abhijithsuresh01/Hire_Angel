@@ -64,50 +64,49 @@
     }
   </style>
 </head>
-
 <body>
   <form id="form1" name="form1" method="post" action="register_code" enctype="multipart/form-data">
     <h1>Register</h1>
     <table border="0">
       <tr>
         <td><label for="firstname">First Name</label></td>
-        <td><input type="text" name="textfield" id="firstname" /></td>
+        <td><input type="text" name="textfield" id="firstname" required /></td>
       </tr>
       <tr>
         <td><label for="lastname">Last Name</label></td>
-        <td><input type="text" name="textfield2" id="lastname" /></td>
+        <td><input type="text" name="textfield2" id="lastname" required /></td>
       </tr>
       <tr>
         <td><label for="phone">Phone No</label></td>
-        <td><input type="text" name="textfield3" id="phone" /></td>
+        <td><input type="tel" name="textfield3" id="phone" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" required /></td>
       </tr>
       <tr>
         <td><label for="email">Email</label></td>
-        <td><input type="text" name="textfield4" id="email" /></td>
+        <td><input type="email" name="textfield4" id="email" required /></td>
       </tr>
       <tr>
         <td><label for="nurseid">Nurse Id</label></td>
-        <td><input type="text" name="textfield5" id="nurseid" /></td>
+        <td><input type="text" name="textfield5" id="nurseid" required /></td>
       </tr>
       <tr>
         <td><label for="speciality">Speciality</label></td>
-        <td><input type="text" name="textfield6" id="speciality" /></td>
+        <td><input type="text" name="textfield6" id="speciality" required /></td>
       </tr>
       <tr>
-        <td><label for="experience">Experience</label></td>
-        <td><input type="text" name="textfield7" id="experience" /></td>
+        <td><label for="experience">Experience (in years)</label></td>
+        <td><input type="number" name="textfield7" id="experience" min="0" max="50" required /></td>
       </tr>
       <tr>
         <td><label for="resume">Resume</label></td>
-        <td><input type="file" name="file" id="resume" /></td>
+        <td><input type="file" name="file" id="resume" accept=".pdf,.doc,.docx" required /></td>
       </tr>
       <tr>
         <td><label for="username">Username</label></td>
-        <td><input type="text" name="textfield8" id="username" /></td>
+        <td><input type="text" name="textfield8" id="username" required /></td>
       </tr>
       <tr>
         <td><label for="password">Password</label></td>
-        <td><input type="text" name="textfield9" id="password" /></td>
+        <td><input type="password" name="textfield9" id="password" minlength="8" required /></td>
       </tr>
       <tr>
         <td colspan="2"><input name="Register" type="submit" id="Register" value="Register" /></td>
@@ -115,4 +114,5 @@
     </table>
   </form>
 </body>
+
 </html>

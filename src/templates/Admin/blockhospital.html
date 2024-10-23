@@ -20,7 +20,7 @@
       <td>{{i['name']}}</td>
       <td>{{i['location']}}</td>
       <td>{{i['contactno']}}</td>
-      <td>{{i['websiteurl']}}</td>
+       <td><a href="{{i['websiteurl']}}">{{i['websiteurl']}}</a> &nbsp;</td>
       <td>
         {% if i["type"] == "blocked"%}
           <a href="unblock_hospital?id={{i['lid']}}">Unblock</a>
