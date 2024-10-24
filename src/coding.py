@@ -742,5 +742,13 @@ def view_equi():
     return render_template("Hospital/view_equi.html", val=res)
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route("/insert_reply_code", methods=['post'])
+def insert_reply_code():
+    reply = request.form['textfield']
+    qry = "UPDATE `complaints` SET reply = %s WHERE id =%s"
+    iud(qry, (reply, session['cid']))
+
+    return '''<script>alert("Reply send successfully");window.location="adminHome"</script>'''
+
+
+app.run(debug=True)
